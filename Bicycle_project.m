@@ -5,7 +5,7 @@ close all
 %% Upload the data
 
 
-file = readmatrix('circuit_bicycle.txt','TrimNonNumeric',true); %here it takes the non numeric values from the file
+file = readmatrix('minute 1.txt','TrimNonNumeric',true); %here it takes the non numeric values from the file
 
 %Assigning the data
 muscle = zeros(length(file),5);
@@ -151,8 +151,40 @@ for i=1:length(locs)-1
     acc{i}=rec_signal(locs(i)*1000:locs(i+1)*1000,:);
 end 
 
-
 %% Plotting the final signal in a polarplot
+
+loop = acc{17};
+x = {zeros(length(loop),5)};
+th = {zeros(length(loop),5)};
+
+for i=1:5
+    x{i}=loop(:,i);
+    th{i}=linspace(0,2*pi,length(x{i}));
+end
+    
+for i=1:5
+    newcolors = {'red','magenta','blue','green','cyan'};
+    subplot(2,3,i)
+    h = polarscatter(th{i},x{i},newcolors{i});
+    ax = ancestor(h,'polaraxes');
+    ax.ThetaZeroLocation = 'top';
+    ax.ThetaDir = "clockwise";
+    if i == 1
+        title('Glute')
+    end
+    if i == 2
+        title('medial quadriceps')
+    end
+    if i == 3
+        title('lateral quadriceps')
+    end
+    if i == 4
+        title('hamstring')
+    end
+    if i == 5
+        title('calf')
+    end
+end
 
 
 
